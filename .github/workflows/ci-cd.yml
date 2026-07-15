@@ -37,6 +37,8 @@ jobs:
         run: |
           echo "SERVER_URL=${{ secrets.SERVER_URL }}" >> .env
           echo "PUBLIC_KEY=${{ secrets.PUBLIC_KEY }}" >> .env
+          echo "API_KEY=${{ secrets.API_KEY }}" >> .env
+          echo "AI_URL=${{ secrets.AI_URL }}" >> .env
 
       - name: 执行启动程序
         run: |
