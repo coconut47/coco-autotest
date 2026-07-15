@@ -1,41 +1,94 @@
-# 智能接口自动化测试框架
-### 技术栈：Python + Pytest + Requests + Allure + OpenAI API + Swagger
-针对项目打造的轻量级接口自动化智能测试框架，
-解决手工测试效率低、回归测试成本高、接口质量难监控的问题，落地测试开发核心思想。  
+# coco-autotest
 
+> 轻量级接口自动化测试框架
+
+### 技术栈
+
+Python · Pytest · Requests · Allure · OpenAI API · Swagger
+
+---
+
+## 简介
+
+基于数据驱动的接口自动化测试框架，解决手工测试效率低、回归成本高、接口质量难监控的问题。只需编写 YAML 配置文件即可新增用例，支持多环境切换与 Allure 可视化报告。
+
+![allure-report](img/img.png)
+
+---
 
 ## 核心特性
-✅ 多环境适配：开发/测试/生产环境一键切换，无需修改用例代码  
-✅ 数据驱动：YAML 解耦用例数据，新增用例仅需编写配置文件  
-✅ 可视化报告：Allure 生成详细报告，支持本地查看
-✅ CI/CD 自动化：支持代码提交后自动测试与报告部署  
-✅ 易用性：一键运行脚本，新手快速上手  
-✅ 智能化(Beta)：集成 OpenAI API，自动生成测试用例和测试数据，提升测试覆盖率和效率(测试版本，由于Swagger报告的不完善，导致生成的测试用例不够准确，后续会优化这一部分功能)
 
+| 特性 | 说明 |
+|------|------|
+| 多环境适配 | 开发/测试/生产一键切换，无需修改用例代码 |
+| 数据驱动 | YAML 解耦用例数据，新增用例仅需编写配置文件 |
+| 可视化报告 | Allure 生成详细报告，本地一键查看 |
+| CI/CD | 代码提交自动触发测试与报告部署 |
+| 开箱即用 | 运行脚本一键启动，零门槛上手 |
+| 智能生成 (Beta) | 集成 OpenAI API，自动生成测试用例与数据 |
 
-![img/img.png](img/img.png)
+---
 
-CI/CD 工作流：
-![img/workflow.png](img/workflow.png)
+## 快速开始
 
-yaml测试用例示例：
-[YAML模板使用说明](docs/YAML%E6%A8%A1%E6%9D%BF%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md)
+### 1. 安装依赖
 
-### 快速开始
-#### 安装依赖
 ```bash
 pip install -r requirements.txt
 ```
-#### 配置.env文件
-```text
-主要是设置base_url和环境变量((common/config.py))，支持多环境切换
+
+### 2. 配置环境
+
+在项目根目录创建 `.env` 文件，填写被测服务地址：
+
+```env
+SERVER_URL=http://localhost:8080
 ```
-#### 运行测试
-###### 方法一：(命令行启动,需要手动生成Allure报告)
+
+### 3. 运行测试
+
 ```bash
+# 方式一：命令行启动
 pytest
+
+# 方式二：一键启动（自动生成 Allure 报告）
+python start.py
 ```
-###### 方法二：(运行启动文件，会自动生成Allure报告)
+
+### 4. 查看报告
+
 ```bash
-python3 start.py
+allure serve temps
 ```
+
+---
+
+## 项目结构
+
+```
+coco-autotest/
+├── common/          # 公共模块（请求封装、断言检查、配置加载）
+├── utils/           # 工具模块（数据解析、RSA加密、Allure工具）
+├── testcases/       # 测试用例（Python）
+├── data/            # 测试数据（YAML）
+│   ├── ai_testcases/  # AI 生成的用例数据
+│   └── test_data/     # 手动编写的用例数据
+├── ai_auto_testcases/ # AI 用例生成器
+├── conftest.py      # pytest 全局 fixtures
+├── start.py         # 一键启动入口
+└── pytest.ini       # pytest 配置
+```
+
+---
+
+## 编写测试用例
+
+采用 YAML 数据驱动，每个用例包含三步：请求 → 断言 → 提取。详细模板说明见 [YAML 模板使用说明](docs/YAML%E6%A8%A1%E6%9D%BF%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.md)。
+
+![workflow](img/workflow.png)
+
+---
+
+## CI/CD 工作流
+
+提交代码自动触发：安装依赖 → 运行测试 → 生成 Allure 报告 → 部署到 Pages
