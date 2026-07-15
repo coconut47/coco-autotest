@@ -1,0 +1,15 @@
+.idea/
+__pycache__/
+.pytest_cache/
+.venv/
+.env
+scripts/
+config/config.yaml
+config/extract.yaml
+report/
+temps/
+logs/
+.claude/
+data/ai_testcases/z_unuse/
+docx/
+CLAUDE.md
