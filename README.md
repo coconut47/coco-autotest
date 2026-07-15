@@ -13,7 +13,7 @@
 ✅ 智能化(Beta)：集成 OpenAI API，自动生成测试用例和测试数据，提升测试覆盖率和效率(测试版本，由于Swagger报告的不完善，导致生成的测试用例不够准确，后续会优化这一部分功能)
 
 
-![img/img.png](C:\Users\xue\AppData\Local\Temp\1784083729873.png)
+![img/img.png](img/img.png)
 
 CI/CD 工作流：
 ![img/workflow.png](img/workflow.png)
